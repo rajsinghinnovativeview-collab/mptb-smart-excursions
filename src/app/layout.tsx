@@ -1,0 +1,5 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import './globals.css';
+export const metadata: Metadata = { title:'MPTB Smart Excursions | Madhya Pradesh Tourism',description:'Explore, register and manage Madhya Pradesh Tourism Board excursions and experiences.' };
+export default function Layout({children}:{children:React.ReactNode}) {return <html lang="en"><body><header className="topbar"><div className="shell nav"><Link className="brand" href="/"><span className="brandmark">MP</span><span><strong>MADHYA PRADESH TOURISM</strong><small>Smart Excursions Portal</small></span></Link><nav className="navlinks" aria-label="Main navigation"><Link href="/">Home</Link><Link href="/#events">Events</Link><Link href="/dashboard">My bookings</Link><Link href="/admin">Admin</Link><Link href="/operator">Operator</Link><Link href="/login">Sign in</Link></nav></div></header>{children}<footer className="footer"><div className="shell">Madhya Pradesh Tourism Board · Smart Excursions Management Portal · For authorised event operations. <span style={{float:'right'}}>© {new Date().getFullYear()}</span></div></footer></body></html>}
