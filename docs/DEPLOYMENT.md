@@ -1,9 +1,22 @@
-# Deployment
+# Deployment and acceptance checklist
 
-1. Create a Google Sheet and deploy the Apps Script backend (implementation and permissions must be reviewed before production use).
-2. Configure `GAS_WEB_APP_URL` and `GAS_API_SECRET` as server-side environment variables. Never expose them as `NEXT_PUBLIC_` variables.
-3. Install dependencies with `npm install`, run `npm run typecheck` and `npm run build`.
-4. Configure Cloudflare Workers with the OpenNext adapter before publishing. This starter does not include a verified production deployment configuration.
-5. Set up email sending and role assignments before enabling registrations. Test capacity and idempotency with concurrent requests.
+- [ ] Spreadsheet owned by authorised MPTB account and access audited
+- [ ] `setupSheets()` initialised exact names and headers without overwriting existing data
+- [ ] Google Apps Script properties set and shared secret is strong/rotatable
+- [ ] Apps Script `/exec` endpoint reachable from Cloudflare Worker server, not from client-side code
+- [ ] Cloudflare secrets configured for `GAS_WEB_APP_URL`, `GAS_API_SECRET`
+- [ ] `npm install`, `npm run typecheck`, `npm run build`, `npm run preview` successful
+- [ ] Public catalogue loads active events and correct capacity, never hides network errors
+- [ ] First-time and returning OTP authentication tested, including expiry, retry and abuse controls
+- [ ] Verified-email badge lookup tested; unauthorized badge data never disclosed
+- [ ] Same-date bookings blocked under simultaneous submissions
+- [ ] Different dates bookable under one permanent QR
+- [ ] Cancelled booking frees seat; repeated cancellation cannot corrupt data
+- [ ] Operator only accesses scoped event/excursion; QR scan alone changes nothing
+- [ ] Boarding/arrival repeated scans don't double-count; audit timestamps present
+- [ ] Mobile browser permissions tested over HTTPS
+- [ ] Past Google Forms data imported only after schema mapping / deduplication review
+- [ ] Staging data separate from production; no real passenger/guest personal data exposed
+- [ ] Email quotas, alerting, abuse rate limiting, permission rules, retention policy reviewed
 
-**Status:** Initial UI and server bridge only. Google Apps Script service, OTP sending, booking enforcement, operator permissions and live deployment require implementation and end-to-end verification.
+Deploy only after completing these checks. The current source has not been confirmed live.

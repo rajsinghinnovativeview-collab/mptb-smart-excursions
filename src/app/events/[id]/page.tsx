@@ -1,1 +1,2 @@
-import EventDetails from '@/components/EventDetails';export default async function EventPage({params}:{params:Promise<{id:string}>}){const {id}=await params;return <main><a href="/">← All events</a><EventDetails id={id}/></main>}
+import {EventDetail} from '@/components/EventDetail';
+export default async function Page({params}:{params:Promise<{id:string}>}) {const {id}=await params;return <EventDetail id={id}/>;}
