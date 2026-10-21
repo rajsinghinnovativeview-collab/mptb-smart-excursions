@@ -2,7 +2,7 @@
 
 ## Cloudflare Workers Builds configuration
 
-This project uses **Next.js 15 + OpenNext for Cloudflare**. A plain `next build` only creates `.next/` and cannot be deployed with Wrangler. The repository's `npm run build` now runs Next.js and then `opennextjs-cloudflare build --skipNextBuild` to generate `.open-next/worker.js`, `.open-next/assets/`, and the compiled OpenNext configuration.
+This project uses **Next.js 16 + OpenNext for Cloudflare**. A plain `next build` only creates `.next/` and cannot be deployed with Wrangler. The repository's `npm run build` now runs the supported Next.js 16.4 release with Webpack and then `opennextjs-cloudflare build --skipNextBuild` to generate `.open-next/worker.js`, `.open-next/assets/`, and the compiled OpenNext configuration.
 
 In **Cloudflare Dashboard → Workers & Pages → mptb-smart-excursions → Settings → Build**, use:
 
