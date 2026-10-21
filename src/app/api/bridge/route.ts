@@ -1,3 +1,4 @@
+import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 export const dynamic = 'force-dynamic';
@@ -17,8 +18,11 @@ export async function POST(req: NextRequest) {
       out.cookies.set(COOKIE,'',{httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:'lax',path:'/',maxAge:0});
       return out;
     }
-    const url=process.env.GAS_WEB_APP_URL;
-    const secret=process.env.GAS_API_SECRET;
+    // OpenNext on Cloudflare exposes runtime bindings through the request context.
+    // process.env remains a fallback for local Next.js development.
+    const cfEnv = (await getCloudflareContext({ async: true })).env as unknown as Record<string, string | undefined>;
+    const url = cfEnv.GAS_WEB_APP_URL || process.env.GAS_WEB_APP_URL;
+    const secret = cfEnv.GAS_API_SECRET || process.env.GAS_API_SECRET;
     if (!url || !secret) return NextResponse.json({ok:false,error:'Server is not configured. Set GAS_WEB_APP_URL and GAS_API_SECRET.'},{status:503});
     if (!/^https:\/\/script\.google\.com\/macros\/s\//.test(url)) return NextResponse.json({ok:false,error:'Invalid server configuration.'},{status:503});
     const jar = await cookies();
